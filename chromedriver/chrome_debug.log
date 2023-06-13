@@ -1,48 +1,30 @@
-[9336:26464:0609/125957.601:WARNING:chrome_main_delegate.cc(593)] This is Chrome version 114.0.5735.110 (not a warning)
-[9336:26464:0609/125957.628:ERROR:os_crypt_win.cc(102)] Failed to decrypt: Key not valid for use in specified state. (0x8009000B)
-[9336:26464:0609/125957.682:INFO:chrome_browser_cloud_management_controller.cc(167)] Starting CBCM Controller Initialization
-[9336:22380:0609/125957.706:ERROR:token_service_table.cc(135)] Failed to decrypt token for service AccountId-117074556851125665333
-[9336:25836:0609/125957.711:WARNING:content_hash.cc(56)] Failed to delete C:\Users\anthony.kahley\Documents\webtouch_for_platform\chromedriver\Default\Extensions\ghbmnnjooekpmoecnnnilnnbdlolhkhi\1.62.0_0\_metadata\verified_contents.json
-[9336:26464:0609/125957.711:WARNING:force_installed_metrics.cc(454)] All forced extensions seem to be installed
-[9336:25836:0609/125957.713:WARNING:content_hash.cc(56)] Failed to delete C:\Users\anthony.kahley\Documents\webtouch_for_platform\chromedriver\Default\Extensions\iekfdmgbpmcklocjhlabimljddkeflgl\0.1.8_0\_metadata\verified_contents.json
-[9336:26464:0609/125957.878:INFO:primary_account_manager.cc(466)] Revoking all refresh tokens on server. Reason: sign out
-[9336:26464:0609/125958.086:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'ch-ua-form-factor'.", source:  (0)
-[9336:26464:0609/125958.105:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
-[9336:26464:0609/125958.145:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
-[9336:23176:0609/125958.181:ERROR:content_hash.cc(232)] Error writing computed_hashes.json at C:\Users\anthony.kahley\Documents\webtouch_for_platform\chromedriver\Default\Extensions\ghbmnnjooekpmoecnnnilnnbdlolhkhi\1.62.0_0\_metadata\verified_contents.json
-[9336:23176:0609/125958.181:ERROR:content_hash.cc(256)] Fetching verified_contents.json for extension id: ghbmnnjooekpmoecnnnilnnbdlolhkhi version: 1.62.0 failed with error code 200
-[9336:23176:0609/125958.183:ERROR:content_hash.cc(232)] Error writing computed_hashes.json at C:\Users\anthony.kahley\Documents\webtouch_for_platform\chromedriver\Default\Extensions\iekfdmgbpmcklocjhlabimljddkeflgl\0.1.8_0\_metadata\verified_contents.json
-[9336:23176:0609/125958.183:ERROR:content_hash.cc(256)] Fetching verified_contents.json for extension id: iekfdmgbpmcklocjhlabimljddkeflgl version: 0.1.8 failed with error code 200
-[9336:23176:0609/125958.190:WARNING:content_hash.cc(56)] Failed to delete C:\Users\anthony.kahley\Documents\webtouch_for_platform\chromedriver\Default\Extensions\iekfdmgbpmcklocjhlabimljddkeflgl\0.1.8_0\_metadata\verified_contents.json
-[9336:26464:0609/125958.205:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
-[9336:26464:0609/125958.240:INFO:CONSOLE(1264)] "Deprecated API for given entry type.", source: https://mail.google.com/_/scs/mail-static/_/js/k=gmail.main.en_GB.ys84z4VCA3w.es5.O/am=DgjAEveDv4THCEQEASKyXwf-FliwBHzCIQYuAhCAAAYfTGrV9L0RKvnwAxIAIABHh6NiAKYDYGEZhwdLEjIAYAIAAAAAAAAAAAAAAAAAAABXUh4/d=1/exm=b/ed=1/im=1/dg=0/br=1/wt=1/rs=AHGWq9CclETClsDLhN4QPeefjZhESUbfFA/cb=loaded_1/m=a (1264)
-[9336:26464:0609/125958.260:INFO:CONSOLE(3328)] "Unrecognized feature: 'attribution-reporting'.", source: https://mail.google.com/_/scs/mail-static/_/js/k=gmail.main.en_GB.ys84z4VCA3w.es5.O/am=DgjAEveDv4THCEQEASKyXwf-FliwBHzCIQYuAhCAAAYfTGrV9L0RKvnwAxIAIABHh6NiAKYDYGEZhwdLEjIAYAIAAAAAAAAAAAAAAAAAAABXUh4/d=1/exm=a,b/ed=1/im=1/dg=0/br=1/wt=1/rs=AHGWq9CclETClsDLhN4QPeefjZhESUbfFA/cb=loaded_2/m=m,m_i,i20jfd,lKrWxc,hkjXJ,gYOl6d,HXLjIb,DL8jZe,xaQcye,J41knb,oRmHt,E1P0kd,pE92lb,v2eEBc (3328)
-[9336:23176:0609/125958.268:ERROR:content_hash.cc(232)] Error writing computed_hashes.json at C:\Users\anthony.kahley\Documents\webtouch_for_platform\chromedriver\Default\Extensions\iekfdmgbpmcklocjhlabimljddkeflgl\0.1.8_0\_metadata\verified_contents.json
-[9336:23176:0609/125958.268:ERROR:content_hash.cc(256)] Fetching verified_contents.json for extension id: iekfdmgbpmcklocjhlabimljddkeflgl version: 0.1.8 failed with error code 200
-[9336:26464:0609/125958.269:WARNING:chrome_content_verifier_delegate.cc(215)] Corruption detected in extension iekfdmgbpmcklocjhlabimljddkeflgl installed at: C:\Users\anthony.kahley\Documents\webtouch_for_platform\chromedriver\Default\Extensions\iekfdmgbpmcklocjhlabimljddkeflgl\0.1.8_0, from webstore: 1, corruption reason: 1, should be repaired: 1, extension location: kExternalPolicyDownload
-[9336:26464:0609/125958.274:WARNING:extension_updater.cc(478)] Corrupt extension with id iekfdmgbpmcklocjhlabimljddkeflgl will be reinstalled with UpdateService.
-[9336:26464:0609/125958.530:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'ch-ua-form-factor'.", source:  (0)
-[9336:26464:0609/125958.536:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
-[9336:26464:0609/125958.623:INFO:CONSOLE(651)] "Uncaught CustomError: Error in protected function: z`a6jdv`0", source: https://mail.google.com/_/scs/mail-static/_/js/k=gmail.main.en_GB.ys84z4VCA3w.es5.O/am=DgjAEveDv4THCEQEASKyXwf-FliwBHzCIQYuAhCAAAYfTGrV9L0RKvnwAxIAIABHh6NiAKYDYGEZhwdLEjIAYAIAAAAAAAAAAAAAAAAAAABXUh4/d=1/im=1/dg=0/br=1/wt=1/rs=AHGWq9CclETClsDLhN4QPeefjZhESUbfFA/cb=loaded_0/m=b (651)
-[9336:26464:0609/125958.624:INFO:CONSOLE(651)] "Uncaught CustomError: Error in protected function: z`VWNrn`0", source: https://mail.google.com/_/scs/mail-static/_/js/k=gmail.main.en_GB.ys84z4VCA3w.es5.O/am=DgjAEveDv4THCEQEASKyXwf-FliwBHzCIQYuAhCAAAYfTGrV9L0RKvnwAxIAIABHh6NiAKYDYGEZhwdLEjIAYAIAAAAAAAAAAAAAAAAAAABXUh4/d=1/im=1/dg=0/br=1/wt=1/rs=AHGWq9CclETClsDLhN4QPeefjZhESUbfFA/cb=loaded_0/m=b (651)
-[9336:26464:0609/125958.626:INFO:CONSOLE(651)] "Uncaught CustomError: Error in protected function: z`Cl6csf`0", source: https://mail.google.com/_/scs/mail-static/_/js/k=gmail.main.en_GB.ys84z4VCA3w.es5.O/am=DgjAEveDv4THCEQEASKyXwf-FliwBHzCIQYuAhCAAAYfTGrV9L0RKvnwAxIAIABHh6NiAKYDYGEZhwdLEjIAYAIAAAAAAAAAAAAAAAAAAABXUh4/d=1/im=1/dg=0/br=1/wt=1/rs=AHGWq9CclETClsDLhN4QPeefjZhESUbfFA/cb=loaded_0/m=b (651)
-[9336:26464:0609/125959.193:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'ch-ua-form-factor'.", source:  (0)
-[9336:26464:0609/125959.208:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
-[9336:26464:0609/125959.209:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
-[9336:26464:0609/125959.297:INFO:CONSOLE(0)] "[DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o", source: https://accounts.google.com/v3/signin/identifier?dsh=S2114241585%3A1686340799043908&continue=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&emr=1&ffgf=1&followup=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&ifkv=Af_xneGhzRfXzy4q6BChNSv9M6uhy1EM8LGvIHzN4qAm5THVfO8iRqX5DgV9AM1cSXzgOIwfnoEp&osid=1&passive=1209600&service=mail&flowName=GlifWebSignIn&flowEntry=ServiceLogin (0)
-[9336:26464:0609/125959.308:INFO:CONSOLE(269)] "%c%s color: red; background: yellow; font-size: 24px; WARNING!", source: https://www.gstatic.com/_/mss/boq-identity/_/js/k=boq-identity.AccountsSignInUi.en_US._Z1UQp2ix3w.es5.O/am=DuQchx74QfxPdf4ZJ4cBAAAAAAAIAAAWhjkBCA/d=1/excm=_b,_r,_tp,identifierview/ed=1/dg=0/wt=2/ujg=1/rs=AOaEmlF83BdH-nfSjJb12NepH-mRpu33aA/m=_b,_tp,_r (269)
-[9336:26464:0609/125959.308:INFO:CONSOLE(269)] "%c%s font-size: 18px; Using this console may allow attackers to impersonate you and steal your information using an attack called Self-XSS.
-Do not enter or paste code that you do not understand.", source: https://www.gstatic.com/_/mss/boq-identity/_/js/k=boq-identity.AccountsSignInUi.en_US._Z1UQp2ix3w.es5.O/am=DuQchx74QfxPdf4ZJ4cBAAAAAAAIAAAWhjkBCA/d=1/excm=_b,_r,_tp,identifierview/ed=1/dg=0/wt=2/ujg=1/rs=AOaEmlF83BdH-nfSjJb12NepH-mRpu33aA/m=_b,_tp,_r (269)
-[9336:26464:0609/125959.548:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'ch-ua-form-factor'.", source:  (0)
-[9336:26464:0609/125959.550:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
-[9336:26464:0609/125959.562:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
-[9336:26464:0609/125959.632:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'ch-ua-form-factor'.", source:  (0)
-[9336:26464:0609/125959.641:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
-[9336:26464:0609/125959.795:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
-[9336:26464:0609/130000.491:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
-[9336:23824:0609/130002.307:ERROR:gcm_store_impl.cc(941)] Failed to restore security token.
-[9336:23824:0609/130003.501:ERROR:gcm_store_impl.cc(941)] Failed to restore security token.
-[9336:26464:0609/130019.355:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
-[9336:26464:0609/130026.334:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
-[9336:26464:0609/130026.740:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
-[9336:26464:0609/130049.701:WARNING:pref_notifier_impl.cc(41)] Pref observer for media_router.cast_allow_all_ips found at shutdown.
+[29460:26744:0612/170114.386:WARNING:chrome_main_delegate.cc(593)] This is Chrome version 114.0.5735.110 (not a warning)
+[29460:26744:0612/170114.452:INFO:chrome_browser_cloud_management_controller.cc(167)] Starting CBCM Controller Initialization
+[29460:26744:0612/170114.474:ERROR:installed_loader.cc(337)] Expecting reinstall for extension id: iekfdmgbpmcklocjhlabimljddkeflgl due to corruption detected in prior session.
+[29460:26744:0612/170114.479:WARNING:extension_updater.cc(478)] Corrupt extension with id iekfdmgbpmcklocjhlabimljddkeflgl will be reinstalled with UpdateService.
+[29460:26744:0612/170114.920:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
+[29460:26744:0612/170114.982:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
+[29460:26744:0612/170116.242:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
+[29460:26744:0612/170117.223:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
+[29460:26744:0612/170117.227:INFO:CONSOLE(134)] "[Report Only] This document requires 'TrustedScriptURL' assignment.", source: https://www.google.com/gmail/about/ (134)
+[29460:26744:0612/170117.644:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
+[29460:26744:0612/170120.524:WARNING:extension_updater.cc(478)] Corrupt extension with id iekfdmgbpmcklocjhlabimljddkeflgl will be reinstalled with UpdateService.
+[29460:26744:0612/170120.789:INFO:CONSOLE(680)] "Inside get bot keys function", source: https://chatbot.zodiac-test.com/FAQChatbot-UI/Ver1.0/js/botwindow.js?ver=0.18385470266818227 (680)
+[29460:26744:0612/170120.793:INFO:CONSOLE(736)] "From Promise to Get Bot Details{}", source: https://chatbot.zodiac-test.com/FAQChatbot-UI/Ver1.0/js/botwindow.js?ver=0.18385470266818227 (736)
+[29460:26744:0612/170121.355:INFO:CONSOLE(0)] "Access to XMLHttpRequest at 'https://prm.zodiac-test.com/secrets/v1/get' from origin 'https://site.zodiac-test.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.", source: https://site.zodiac-test.com/index.html#/owners-center (0)
+[29460:26744:0612/170121.356:INFO:CONSOLE(716)] "[object Object]", source: https://chatbot.zodiac-test.com/FAQChatbot-UI/Ver1.0/js/botwindow.js?ver=0.18385470266818227 (716)
+[29460:26744:0612/170121.356:INFO:CONSOLE(762)] "Success:Bot initialised successfully", source: https://chatbot.zodiac-test.com/FAQChatbot-UI/Ver1.0/js/botwindow.js?ver=0.18385470266818227 (762)
+[29460:26744:0612/170121.364:INFO:CONSOLE(149)] "UriParameterError: Expected uri parameter to have length >= 1, but found "" for params.botName UriParameterError: Expected uri parameter to have length >= 1, but found "" for params.botName
+    at constructor.fail (https://sdk.amazonaws.com/js/aws-sdk-2.923.0.min.js?ver=0.3509349502000987:82:25270)
+    at constructor.validateUri (https://sdk.amazonaws.com/js/aws-sdk-2.923.0.min.js?ver=0.3509349502000987:82:27378)
+    at constructor.validateString (https://sdk.amazonaws.com/js/aws-sdk-2.923.0.min.js?ver=0.3509349502000987:82:27290)
+    at constructor.validateScalar (https://sdk.amazonaws.com/js/aws-sdk-2.923.0.min.js?ver=0.3509349502000987:82:26603)
+    at constructor.validateMember (https://sdk.amazonaws.com/js/aws-sdk-2.923.0.min.js?ver=0.3509349502000987:82:26007)
+    at constructor.validateStructure (https://sdk.amazonaws.com/js/aws-sdk-2.923.0.min.js?ver=0.3509349502000987:82:25675)
+    at constructor.validateMember (https://sdk.amazonaws.com/js/aws-sdk-2.923.0.min.js?ver=0.3509349502000987:82:25878)
+    at constructor.validate (https://sdk.amazonaws.com/js/aws-sdk-2.923.0.min.js?ver=0.3509349502000987:82:24926)
+    at constructor.<anonymous> (https://sdk.amazonaws.com/js/aws-sdk-2.923.0.min.js?ver=0.3509349502000987:81:31212)
+    at constructor.callListeners (https://sdk.amazonaws.com/js/aws-sdk-2.923.0.min.js?ver=0.3509349502000987:84:1696)", source: https://chatbot.zodiac-test.com/FAQChatbot-UI/Ver1.0/js/botwindow.js?ver=0.18385470266818227 (149)
+[29460:26744:0612/170131.699:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
+[29460:26744:0612/170145.488:INFO:CONSOLE(1)] "undetected chromedriver 1337!", source:  (1)
+[29460:26744:0612/170214.887:WARNING:pref_notifier_impl.cc(41)] Pref observer for media_router.cast_allow_all_ips found at shutdown.
