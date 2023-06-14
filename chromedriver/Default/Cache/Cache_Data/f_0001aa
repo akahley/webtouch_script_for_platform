@@ -1,0 +1,778 @@
+function getRandomId(length) {
+  var result = '';
+  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  var expires = "expires=" + d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+async function getUser(request_headers) {
+ 
+ details = (localStorage.getItem('myAccount'));
+
+  if ((localStorage.getItem("myAccount")) === null){
+    $("#p_user_name").text('User!');
+    $("#p_first_line").text(greeting_wishes);
+    $("#p_second_line").text('Login and come back here!!');
+    $("#chat-input__text").attr('disabled','disabled');
+    $("#chat-submit").attr('disabled','disabled');
+  }
+  else {
+    $("#p_first_line").text(greeting_wishes);
+    session_user_id=JSON.parse(localStorage.getItem("myAccount")).Id;
+  firstName=(JSON.parse(localStorage.getItem("myAccount")).firstName);
+  lastName=JSON.parse(localStorage.getItem("myAccount")).lastName;
+  
+  $("#p_user_name").text(firstName + ' ' + lastName + '!');
+  
+  if(!sessionAttributes.language.match('en'))
+  {
+    hellomsg = 'Hello '
+    hellomsg=await callTranslate(hellomsg,sessionAttributes.language);
+    $("#p_user_name").text(firstName + ' ' + lastName + '!');
+    
+  }
+
+  firstline = $("#p_first_line").text();
+  secondline = $("#p_second_line").text();
+
+if(!sessionAttributes.language.match('en'))
+  {
+    firstline=await callTranslate(firstline,sessionAttributes.language);
+    translatetextfirst =$("#p_first_line").text(firstline);
+    secondline=await callTranslate(secondline,sessionAttributes.language);
+    
+    translatetextsecond = $("#p_second_line").text(secondline);
+    
+  }
+
+  
+  sessionAttributes.name= firstName + ' ' + lastName;
+  sessionAttributes["id"]=session_user_id;
+//Setting ID Token
+sessionAttributes.idToken=(getCookie('idToken'));
+
+//Setting email id
+sessionAttributes.email=JSON.parse(localStorage.getItem("myAccount")).email;
+sessionAttributes.country=JSON.parse(localStorage.getItem("myAccount")).country;
+//Setting language
+sessionAttributes.language=localStorage.getItem("language");
+
+  }
+
+}
+
+function getCookie(cname) {
+  
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function render_messages(messages, message_index, is_chat, message_question = "") {
+  $('.chat-logs').append(render_html(messages[message_index], message_question));
+
+  if (is_chat === true) {
+    $(".chat-logs").animate({
+      scrollTop: $('.chat-logs').get(0).scrollHeight
+    }, 1250);
+  }
+
+  // recursion
+  if (typeof messages[message_index + 1] === 'undefined') {
+
+    var swiper = new Swiper('.swiper-container', {
+      direction: 'horizontal'
+    });
+
+    return;
+  } else {
+    render_messages(messages, message_index + 1, is_chat, message_question);
+  }
+}
+//calling invoking the chatbot
+async function callGreetingMessage() {
+  
+  var params = {
+    botAlias: '$LATEST',
+    botName: BOT_NAME,
+    inputText: "invokechatbot",
+    userId: lexUserId,
+    sessionAttributes: sessionAttributes
+  };
+
+  if(params.botName === "" || AWS.config.credentials === null){
+    $("#chat-input__text").attr('disabled','disabled');
+    $("#chat-submit").attr('disabled','disabled');
+  }
+  
+  var greetingmessage="Hello, I'm the iAquaTalk Virtual Assistant.";
+  
+
+  if(!sessionAttributes.language.match('en'))
+  {
+    greetingmessage=await callTranslate(greetingmessage,sessionAttributes.language);
+    
+  }
+ 
+  render_messages([{
+      'type': "text_lex",
+    'title': greetingmessage
+  }], 0, false, greetingmessage);
+
+
+
+  lexruntime.postText(params, async function(err, data) {
+
+
+    if (err) {
+      console.log(err, err.stack);
+    }
+    if (data) {
+      // capture the sessionAttributes for the next cycle
+      sessionAttributes = data.sessionAttributes;
+      var secondmessage="You can also type your message directly below.";
+  
+
+  if(!sessionAttributes.language.match('en'))
+  {
+    secondmessage=await callTranslate(secondmessage,sessionAttributes.language);
+    
+  }
+     var type="";
+      if(data.responseCard)
+      { 
+        if(data.responseCard.contentType=="application/vnd.amazonaws.card.generic")
+      {
+        type="carousel";
+      render_messages([{
+        'type': type,
+        'title': data
+      }], 0, false, data);
+      }
+          }
+        {
+          render_messages([{
+            'type': "text_lex",
+            'title': secondmessage
+          }], 0, false, "You can also type in directly below.");
+          }
+ 
+  }});
+  
+  
+};
+
+async function callLex(request_data, is_chat, message_question = "") {
+  var sendtoLex=request_data.message;
+  
+ 
+  if(!sessionAttributes.language.match('en'))
+  {
+    sendtoLex=await callTranslate(sendtoLex,'en');
+  }
+  const question_ids = {
+    QUESTIONID : "3000"
+  }
+  if(sessionAttributes.qnabot_qid === (question_ids.QUESTIONID)){
+    var qnabotcontext = JSON.parse(sessionAttributes.qnabotcontext);
+    sendtoLex = qnabotcontext.previous.q + " " + "Dev:: " + sendtoLex ;
+    console.log("send to lex",sendtoLex)
+  }
+  var params = {
+    botAlias: '$LATEST',
+    botName: BOT_NAME,
+    inputText: sendtoLex,
+    userId: lexUserId,
+   sessionAttributes: sessionAttributes
+              };
+
+ 
+  if (is_chat === true) {
+    render_messages([{
+      'type': 'bot_thinking'
+    }], 0, true);
+  }
+  lexruntime.postText(params,  async function(err, data) {
+    
+    if (err) {
+      $(".bot-thinking").remove();
+      console.log(err, err.stack);
+     
+      render_messages([{
+        'type': 'text',
+        'title': OFFLINE_MESSAGE
+      }], 0, true);
+    }
+    if (data) {
+      is_chat=true;
+      $(".bot-thinking").remove();
+       // capture the sessionAttributes for the next cycle
+      sessionAttributes = data.sessionAttributes;
+     var type="";
+     if (data.dialogState=="ElicitSlot")
+     {
+      if(!sessionAttributes.language.match('en'))
+      {
+        data.message=await callTranslate(data.message,sessionAttributes.language);
+      }
+     }
+      if(data.responseCard)
+      {
+        if(data.responseCard.contentType=="application/vnd.amazonaws.card.generic")
+      { // Render message from the response card
+        type="text_lex";
+      render_messages([{
+        'type': type,
+        'title': data.message
+      }], 0, is_chat, message_question);
+        // Render carousel from the response card
+        type="carousel";
+      render_messages([{
+        'type': type,
+        'title': data
+      }], 0, is_chat, message_question);
+      }
+      }
+      else
+     { if(JSON.stringify(request_data.type))
+      type="text_lex"
+      else
+      type="text_lex";
+
+      render_messages([{
+        'type': type,
+        'title': data.message
+      }], 0, true, message_question);
+
+      const questionids = {
+        QUESTION_ID_START_RANGE : "1000",
+        QUESTION_ID_END_RANGE : "4002"
+      }
+
+      if(sessionAttributes.qnabot_qid === ""){
+        var followup_null = `Meanwhile, you can try contacting our technical support team at 800-822-7933.<br><a href="https://chatbot.zodiac-test.com/ChatbotFeedbackForm/feedback.html?name=${sessionAttributes.name}&email=${sessionAttributes.email}" target="_blank">Click here</a> for providing your feedback to help us improve and assist you better`
+     
+        if(!sessionAttributes.language.match('en'))
+        {
+          followup=await callTranslate(followup_null,sessionAttributes.language);
+        }
+      setTimeout(() => {
+        render_messages([{
+          'type': 'text',
+          //'message': "Thumbs up"
+          'title': followup_null,
+        }], 0, true);
+        
+      }, 3000);
+      }
+
+      if(sessionAttributes.qnabot_qid >= (questionids.QUESTION_ID_START_RANGE) && sessionAttributes.qnabot_qid <= (questionids.QUESTION_ID_END_RANGE) && JSON.parse(sessionAttributes.Device).length != 0 )
+      {
+        var followup = "Was I able to answer your question correctly?"
+        if(!sessionAttributes.language.match('en'))
+        {
+          followup=await callTranslate(followup,sessionAttributes.language);
+        }
+        
+      setTimeout(() => {
+        render_messages([{
+          'type': 'text',
+          //'message': "Thumbs up"
+          'title': followup,
+        }], 0, true);
+        
+      }, 3000); }
+
+      if(JSON.stringify(request_data.type).search('positivefeedback')>=0)
+      {
+      setTimeout(() => {
+        render_messages([{
+          'type': 'text_lex',
+          //'message': "Thumbs up"
+          'title': "Is there anything else that I can help you with?.",
+        }], 0, true);
+        
+      }, 10000); }
+     
+    }
+    
+     
+}});
+}
+
+async function callTranslate(inputdata,destLang) {
+  var params = {
+        SourceLanguageCode: 'auto',
+        TargetLanguageCode: destLang,
+        Text: inputdata
+      };
+
+      return new Promise(async function(resolve, reject) {
+        await lextranslate.translateText(params, function (err, transdata){
+          if (err) {
+            console.log(err, err.stack); 
+            return reject("Error"); 
+          }
+          
+          resolve(transdata['TranslatedText']);
+        });
+      });
+  
+var translatedMessage;
+var res=await lextranslate.translateText(params, function (err, data) {
+    if (err) {
+      console.log(err, err.stack); 
+      return ("Error"); 
+    }
+    else  {
+      translatedMessage  = data['TranslatedText'];
+      
+      return translatedMessage;
+    }   
+  });
+
+}
+
+var message_question = "";
+var url_string = window.location.href;
+var url = new URL(url_string);
+var device = url.searchParams.get("device");
+var userSessionId = encodeURIComponent(url.searchParams.get("newIOSession"));
+var conversationId = getRandomId(36);
+setCookie("lang","en","");
+
+if (userSessionId === encodeURIComponent(null)) {
+  userSessionId = encodeURIComponent(getCookie('newIOSession'));
+}
+else{
+  var cookieDetails = encodeURIComponent(getCookie('newIOSession'));
+  if (cookieDetails == ''){
+    setCookie('newIOSession', userSessionId, 365);
+  }
+} 
+
+if (device == null) {
+  device = 'web';
+}
+
+
+getUser({
+  'prmsessionid': 'newIOSession=' + userSessionId
+});
+
+var botController = (function() {})();
+var uiController = (function() {})();
+
+var controller = (function(botCntr, uiCntr) {
+  var $chatCircle,
+    $chatBox,
+    $chatBoxClose,
+    $chatBoxWelcome,
+    $chatWraper,
+    $submitBtn,
+    $chatInput,
+    $msg;
+
+  /*toggle*/
+  function hideCircle(evt) {
+    if(localStorage.getItem("myHistory")!= null){
+      var hist = localStorage.getItem("myHistory");
+      $(".chat-logs").replaceWith(hist);
+    }
+    evt.preventDefault();
+    $chatCircle.hide('scale');
+    $chatBox.show('scale');
+    $chatBoxWelcome.show('scale');
+    
+  }
+
+  function chatBoxCl(evt) {
+    var table = document.getElementsByClassName('chat-logs')[0]
+    localStorage.setItem("myHistory",table.outerHTML);
+    evt.preventDefault();
+    $chatCircle.show('scale');
+    $chatBox.hide('scale');
+    $chatBoxWelcome.hide('scale');
+    $chatWraper.hide('scale');
+  }
+
+  function chatOpenMessage(evt) {
+   
+    evt.preventDefault();
+    $chatBoxWelcome.hide();
+    $chatWraper.show();
+    
+  }
+
+  function submitMsg(evt) {
+    evt.preventDefault();
+    //1. get input message data
+    msg = $chatSubmitBtn.val();
+    //2.if there is no string button send shoudn't work
+    if (msg.trim() == '') {
+      return false;
+    }
+    //3. add message to bot controller
+    callbot(msg);
+    //4. display message to ui controller
+    generate_message(msg, 'self');
+  }
+
+  function getGreeting(){
+    var current_date = new Date();
+    var current_hour = current_date.getHours();
+    var greeting;
+
+    if(current_hour < 12)
+        greeting = 'Good Morning';
+    else if(current_hour >= 12 && current_hour < 17)
+        
+        greeting = 'Good Afternoon'
+    else if(current_hour >= 17 && current_hour < 24)
+        greeting = 'Good Evening';
+    else
+        greeting = 'Welcome';
+    
+    return greeting;
+}
+
+  async function init() {
+    data_tool_msg = "How may I help?"
+    if(!sessionAttributes.language.match('en'))
+      {
+        data_tool_msg=await callTranslate(data_tool_msg,sessionAttributes.language);
+      }
+    $('.sywh-open-services').attr('data-tooltip', data_tool_msg);
+    greeting_wishes = getGreeting();
+    if (greetingmsgsent == false){
+      callGreetingMessage();
+      greetingmsgsent = true;
+    }
+    $chatCircle = $("#chat-circle");
+    $chatBox = $(".chat-box");
+    $chatBoxClose = $(".chat-box-toggle");
+    $chatBoxWelcome = $(".chat-box-welcome__header");
+    $chatWraper = $("#chat-box__wraper");
+    $chatInput = $("#chat-input__text");
+    $submitBtn = $("#chat-submit");
+
+    $chatCircle.on("click", hideCircle);
+    $chatBoxClose.on("click", chatBoxCl);
+    $chatInput.on("click", chatOpenMessage);
+    getUser({
+      'prmsessionid': 'newIOSession=' + userSessionId
+    });
+  }
+
+  // Add click event dynamically
+  $(document).on("click", ".toggle-text-button", function() {
+    if ($(this).text() == "Read More") {
+      $(this).text("Read Less");
+      $(this).parent().children(".toggle-text").slideDown();
+    } else {
+      $(this).text("Read More");
+      $(this).parent().children(".toggle-text").slideUp();
+    }
+  });
+
+  $(document).on("click", ".btny", function() {
+    var btnyval = $(this).val();
+    render_messages([{
+      'type': 'self',
+      'title': btnyval
+    }], 0, true);
+  });
+  $(document).on("click", ".btnn", function() {
+    var btnnval = $(this).val();
+    render_messages([{
+      'type': 'self',
+      'title': btnnval
+    }], 0, true);
+  });
+
+  function like_question(question) {
+    question.classList.add("icon-thumbs-up");
+    let nextSibling = question.nextElementSibling;
+    nextSibling.classList.remove(".icon-thumbs-down");
+    nextSibling.classList.remove("icon-thumbs-down-alt");
+    question.classList.remove(".icon-thumbs-down");
+  }
+
+  function dislike_question(question) {
+    question.classList.add("icon-thumbs-down");
+    let previousSibling = question.previousElementSibling;
+    previousSibling.classList.remove(".icon-thumbs-up");
+    previousSibling.classList.remove("icon-thumbs-up-alt");
+    question.classList.remove(".icon-thumbs-up");
+  }
+
+  $(document).on("click", ".icon-thumbs-up-alt", async function() {
+    like_question(this);
+    
+    var content = $(this).parent().parent('.feedback').text();
+    content = content.replace("Read More", "");
+    content = content.replace("Read Less", "");
+    var question = $(this).parent().parent('.feedback').data('question');
+    await callLex({
+      'type': 'positivefeedback',
+      'device': device,
+      'message': "Thumbs Up",
+      'message_question': question,
+      'session_id': encodeURIComponent(getCookie('newIOSession')),
+      'conversation_id': conversationId
+    }, false);   
+  });
+
+
+  $(document).on("click", ".icon-thumbs-down-alt", function() {
+    dislike_question(this);
+
+    var content = $(this).parent().parent('.feedback').text();
+    content = content.replace("Read More", "");
+    content = content.replace("Read Less", "");
+    var question = $(this).parent().parent('.feedback').data('question');
+    if(message_question)
+    sessionAttributes.userOriginalQuery=message_question;
+    else
+    sessionAttributes.userOriginalQuery=question;
+    
+    callLex({
+      'type': 'negativefeedback',
+      'device': device,
+      'message': "Thumbs down",
+      'message_question': "Negative feedback::"+question,
+      'session_id': encodeURIComponent(getCookie('newIOSession')),
+      'conversation_id': conversationId
+    }, false);
+
+    
+  });
+
+  $(document).on("click", "#contactdetails", function() {
+    render_messages([{
+      'type': 'text',
+      'title': CONTACT_MESSAGE
+    }], 0, true);
+  });
+
+  $(document).on("click", ".btn-details", function() {
+    var btntap1 = $(this).val();
+    
+    // self text
+    render_messages([{
+      'type': 'self',
+      'title': $(this).text()
+    }], 0, true);
+
+    // disabling the button
+    $(this).prop('disabled', true);
+
+    var detailed_text = $(this).parent().children(".detailtext").html();
+    var question = $(this).parent().children(".detailtext").data('question');
+    if (btntap1!== 'Dev:: Hi  i2d')
+    {
+    callLex({
+      'type': 'query',
+      'device': device,
+      'message': btntap1,
+      'message_question': btntap1,
+      'session_id': encodeURIComponent(getCookie('newIOSession')),
+      'conversation_id': conversationId
+    }, true, btntap1);
+  } else
+  {sessionAttributes.DevSelected='i2d'}
+    
+  });
+
+  $(document).on("keypress", "#chat-input__text", function() {
+    $("#chat-input__text").css("border", "none");
+    if (event.keyCode === 13) {
+      $("#chat-submit").click();
+    }
+  });
+
+  $(document).on("click",'.dropdown-menu li a',function () {
+   $('.selectedLi').removeClass('selectedLi');
+   // add class `selectedLi`
+   $(this).addClass('selectedLi');
+    this.selected = true;
+    sessionAttributes.language=$('.dropdown-menu li a.selectedLi').text();
+    if (sessionAttributes.language == 'English'){
+      sessionAttributes.language = 'en'
+    }
+    if (sessionAttributes.language == 'Spanish'){
+      sessionAttributes.language = 'es'
+    }
+    if (sessionAttributes.language == 'French'){
+      sessionAttributes.language = 'fr'
+    }
+     });
+
+  $(document).on("click", "#chat-submit", function() {
+    var chatinputtext = $('#chat-input__text').val().trim();
+   
+    // https://stackoverflow.com/questions/1499889/remove-html-tags-in-javascript-with-regex
+    chatinputtext = chatinputtext.replace(/(<([^>]+)>)/gi, "");
+    var displayinputtext = chatinputtext;
+
+    // https://stackoverflow.com/questions/4374822/remove-all-special-characters-with-regexp
+    chatinputtext = chatinputtext.replace(/[^\w\s]/gi, "");
+
+    if ($('#chat-input__text').val().trim() === "") {
+      $("#chat-input__text").css("border", "1px solid red");
+      return true;
+    } else {
+      $('#chat-input__text').val('');
+      message_question = chatinputtext;
+
+      // self-message
+      render_messages([{
+        'type': 'self',
+        'title': displayinputtext
+      }], 0, true);
+
+      // server-request
+      callLex({
+        'type': 'query',
+        'device': device,
+        'message': chatinputtext,
+        'message_question': message_question,
+        'session_id': encodeURIComponent(getCookie('newIOSession')),
+        'conversation_id': conversationId
+      }, true, message_question);
+    }
+  });
+
+  return {
+    init: init
+  };
+
+})(botController, uiController);
+
+
+const headers = {'API-KEY': 'XN4KXET4KK124BS7JI8RBQ6JELDYCB8P'}
+const botname_data = { "secret_key_1": "BOT_NAME",
+"secret_key_2": "IdentityPoolId"}
+
+async function getBotKeys(){
+
+ console.log("Inside get bot keys function")
+
+const headers = {'API-KEY': 'XN4KXET4KK124BS7JI8RBQ6JELDYCB8P'}
+
+const botname_data = { 
+  "secret_key_1": "BOT_NAME",
+  "secret_key_2": "IdentityPoolId"
+
+}
+
+//const poolid_data = {"secret_key":"IdentityPoolId"}
+return new Promise(async function(resolve, reject) {
+
+  await axios.post("https://prm.zodiac-test.com/secrets/v1/get", botname_data, {
+
+   headers: headers
+
+ })
+
+ .then((response) => {
+
+   //response.Header("Access-Control-Allow-Headers", "API-KEY")
+   console.log("called secret API")
+   BOT_NAME=response.data.secret_value_1;
+   AWS.config.credentials = 
+
+   new AWS.CognitoIdentityCredentials({
+
+    IdentityPoolId: response.data.secret_value_2,
+
+    });
+
+   })
+
+ .catch((error) => {
+
+  console.log(error)
+
+ })
+
+   
+resolve(BOT_NAME);
+
+  });
+
+};
+
+
+
+//Creating promise to ensure Bot Details are received from Secret Manager
+
+
+const promiseToGetBotDetails = new Promise((resolve, reject) => { 
+
+const message = getBotKeys();
+
+console.log("From Promise to Get Bot Details"+JSON.stringify(message));
+
+
+if(message){
+
+  resolve(message)
+ 
+}
+  else{
+
+  reject('Failed to get Bot Details from Secret Manager');
+  } 
+
+});
+
+
+
+
+async function initialiseBot(){
+//Calling Promises in sequence to ensure that Bot gets initiated only if Secret Values are received.
+
+let response = await promiseToGetBotDetails;
+
+
+// response=await promiseToGetBotPoolIDDetails;
+
+    console.log("Success:Bot initialised successfully");
+
+  lexruntime = new AWS.LexRuntime();
+
+  //sessionAttributes = {language:"en"};
+
+  lexContext={};
+
+  lextranslate = new AWS.Translate();
+
+  controller.init();
+
+ } 
+
+$(document).ready(function(){
+  initialiseBot();
+});

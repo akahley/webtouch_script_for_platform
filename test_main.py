@@ -167,14 +167,21 @@ class Driver:
             WebDriverWait(self.driver,25).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="10_24_0"]/table/tbody/tr/td[2]'))).click()
             time.sleep(1)
             
-            assert self.verifyPumpOn() == True
+            if not self.verifyPumpOn():
+                return False
+            else:
+                pass
+
             
             time.sleep(10)
 
             WebDriverWait(self.driver,25).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="10_24_0"]/table/tbody/tr/td[2]'))).click()
             time.sleep(1)
 
-            assert self.verifyPumpOff() == True
+            if not self.verifyPumpOff():
+                return False
+            else:
+                pass
 
             return True
         except (TimeoutException, AssertionError):
@@ -184,11 +191,21 @@ class Driver:
         try:
             index = self.onOffDevices(aux_num)
             time.sleep(1)
-            assert True == self.verifyAuxOn(index)
+            
+            if not self.verifyAuxOn(index):
+                return False
+            else:
+                pass
+
             time.sleep(10)
             self.onOffDevices(aux_num)
             time.sleep(1)
-            assert True == self.verifyAuxOff(index)
+
+            if not self.verifyAuxOff(index):
+                return False
+            else:
+                pass
+
             time.sleep(3)
             return True
         except (TimeoutException, AssertionError):
@@ -210,6 +227,7 @@ class Driver:
 
     def close_window(self):
         self.driver.close()
+        self.driver.quit()
 
 
 
@@ -240,6 +258,8 @@ def test_main(i):
     except (WebDriverException, AssertionError):
         driver.switch_window_handle(0)
         driver.close_window()
+        test_passed = False
+        assert test_passed == True
 
 '''
 if __name__ == "__main__":

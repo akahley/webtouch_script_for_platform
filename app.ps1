@@ -1,2 +1,2 @@
 .\workspace\Scripts\activate;
-python main.py -d 2M3
+pytest test_main.py
